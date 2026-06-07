@@ -1,0 +1,551 @@
+/*
+ * ChronoTrace · global stylesheet
+ *
+ * - Tailwind v4 通过 @import "tailwindcss" 引入
+ * - @theme 定义设计 token(颜色 / 字体 / 间距)
+ * - :root / .dark 定义 light / dark 主题的 HSL 变量
+ * - 遵循 SRS 第 11 章
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Self-hosted fonts ─────────────────────────
+ * Assets live in public/fonts so production builds keep working offline and
+ * avoid runtime third-party font requests. All faces use swap to protect first paint.
+ */
+@font-face {
+  font-display: swap;
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  src: url("/fonts/space-grotesk-latin-variable.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  src: url("/fonts/space-grotesk-latin-ext-variable.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/space-mono-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Space Mono";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/space-mono-latin-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/noto-sans-sc-400.woff2") format("woff2");
+  unicode-range:
+    U+2000-206F, U+2E80-2EFF, U+3000-303F, U+31C0-31EF,
+    U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 500;
+  src: url("/fonts/noto-sans-sc-500.woff2") format("woff2");
+  unicode-range:
+    U+2000-206F, U+2E80-2EFF, U+3000-303F, U+31C0-31EF,
+    U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 600;
+  src: url("/fonts/noto-sans-sc-600.woff2") format("woff2");
+  unicode-range:
+    U+2000-206F, U+2E80-2EFF, U+3000-303F, U+31C0-31EF,
+    U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Noto Sans SC";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/noto-sans-sc-700.woff2") format("woff2");
+  unicode-range:
+    U+2000-206F, U+2E80-2EFF, U+3000-303F, U+31C0-31EF,
+    U+3400-4DBF, U+4E00-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Doto";
+  font-style: normal;
+  font-weight: 400 900;
+  src: url("/fonts/doto-latin-variable.woff2") format("woff2");
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Doto";
+  font-style: normal;
+  font-weight: 400 900;
+  src: url("/fonts/doto-latin-ext-variable.woff2") format("woff2");
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+    U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ─── 设计 token ─────────────────────────────── */
+@theme {
+  /* 字体栈:英文/数字走 Space Grotesk/Space Mono,中文自动回退 Noto Sans SC */
+  --font-sans:
+    "Space Grotesk", "Noto Sans SC", "PingFang SC", "Microsoft YaHei",
+    system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono:
+    "Space Mono", "Noto Sans SC", "SFMono-Regular", ui-monospace, "Cascadia Mono",
+    "Consolas", monospace;
+  --font-display:
+    "Space Grotesk", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  --font-dot: "Doto", "Space Mono", monospace;
+
+  /* 语义色 hsl tuple(与下方 CSS 变量配合) */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-border: hsl(var(--border));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  /* 业务状态色(参照 SRS 11.6) */
+  --color-status-new: hsl(142 70% 42%);        /* 新增 绿 */
+  --color-status-modified: hsl(38 92% 50%);    /* 修改 黄 */
+  --color-status-terminated: hsl(0 70% 50%);   /* 终止 红 */
+  --color-status-error: hsl(0 84% 56%);        /* 校验失败 深红 */
+  --color-status-info: hsl(210 90% 55%);       /* 选中/链接 蓝 */
+}
+
+/* ─── Light 主题(默认) ─────────────────────────── */
+:root {
+  --background: 0 0% 99%;
+  --foreground: 0 0% 9%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --border: 0 0% 90%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 9%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 98%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 9%;
+
+  color-scheme: light;
+}
+
+/* ─── Dark 主题 ─────────────────────────────── */
+.dark {
+  --background: 0 0% 8%;       /* 深灰非纯黑,长时间看不刺眼 */
+  --foreground: 0 0% 96%;
+  --muted: 0 0% 14%;
+  --muted-foreground: 0 0% 64%;
+  --border: 0 0% 18%;
+  --card: 0 0% 10%;
+  --card-foreground: 0 0% 96%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 9%;
+  --accent: 0 0% 14%;
+  --accent-foreground: 0 0% 96%;
+
+  color-scheme: dark;
+}
+
+/* ─── Nothing hero(仅登录/欢迎/启动页) ─────────
+ * 黑底/白底强风格上下文。需要把所有 token 都覆盖一遍,
+ * 否则 text-muted-foreground / border-border 等会继承
+ * :root 浅色值,在黑底上对比度不足。 */
+.nothing-hero {
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --muted: 0 0% 8%;
+  --muted-foreground: 0 0% 70%;
+  --border: 0 0% 28%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --accent: 0 0% 12%;
+  --accent-foreground: 0 0% 100%;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  color-scheme: dark;
+}
+
+.nothing-hero.light-hero {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 38%;
+  --border: 0 0% 75%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --accent: 0 0% 92%;
+  --accent-foreground: 0 0% 0%;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  color-scheme: light;
+}
+
+/* ─── 基础排版 ─────────────────────────────── */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 150ms linear, color 150ms linear;
+}
+
+/* 数字列统一 tabular-nums,对齐好看 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Nothing-style mechanical hover utilities: opacity, border, and dot-matrix only. */
+:root {
+  --nd-motion-fast: 150ms;
+  --nd-motion-normal: 180ms;
+  --nd-motion-ease: cubic-bezier(0.2, 0, 0.16, 1);
+  --nd-hover-bg: hsl(var(--muted) / 0.42);
+  --nd-hover-border: hsl(var(--foreground) / 0.62);
+  --nd-hover-dots: hsl(var(--foreground) / 0.32);
+}
+
+.dark {
+  --nd-hover-bg: hsl(var(--muted) / 0.68);
+  --nd-hover-border: hsl(var(--foreground) / 0.72);
+  --nd-hover-dots: hsl(var(--foreground) / 0.38);
+}
+
+.nd-interactive-surface,
+.nd-interactive-row {
+  isolation: isolate;
+  min-width: 0;
+  position: relative;
+  transition:
+    background-color var(--nd-motion-fast) var(--nd-motion-ease),
+    border-color var(--nd-motion-fast) var(--nd-motion-ease),
+    color var(--nd-motion-fast) var(--nd-motion-ease);
+}
+
+.nd-transition-state {
+  transition:
+    background-color var(--nd-motion-fast) var(--nd-motion-ease),
+    border-color var(--nd-motion-fast) var(--nd-motion-ease),
+    box-shadow var(--nd-motion-fast) var(--nd-motion-ease),
+    color var(--nd-motion-fast) var(--nd-motion-ease),
+    opacity var(--nd-motion-fast) var(--nd-motion-ease),
+    transform var(--nd-motion-fast) var(--nd-motion-ease);
+}
+
+.nd-interactive-surface::after,
+.nd-interactive-row::after {
+  background-image: radial-gradient(circle, var(--nd-hover-dots) 1px, transparent 1px);
+  background-size: 8px 8px;
+  content: "";
+  inset: 0 0 0 auto;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(8px);
+  transition:
+    opacity var(--nd-motion-fast) var(--nd-motion-ease),
+    transform var(--nd-motion-fast) var(--nd-motion-ease);
+  width: 40px;
+}
+
+.nd-interactive-row::before {
+  background: hsl(var(--foreground));
+  content: "";
+  inset: 0 auto 0 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: scaleY(0.35);
+  transform-origin: center;
+  transition:
+    opacity var(--nd-motion-fast) var(--nd-motion-ease),
+    transform var(--nd-motion-fast) var(--nd-motion-ease);
+  width: 2px;
+}
+
+.nd-interactive-surface:focus-within,
+.nd-interactive-row:focus-within {
+  border-color: var(--nd-hover-border);
+}
+
+.nd-interactive-surface:focus-visible,
+.nd-interactive-row:focus-visible {
+  outline: 1px solid var(--nd-hover-border);
+  outline-offset: 2px;
+}
+
+.nd-interactive-surface:focus-within::after,
+.nd-interactive-row:focus-within::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nd-interactive-row:focus-within::before {
+  opacity: 0.85;
+  transform: scaleY(1);
+}
+
+.nd-active-row::before {
+  opacity: 0.85;
+  transform: scaleY(1);
+}
+
+.nd-active-row {
+  transition:
+    background-color var(--nd-motion-fast) var(--nd-motion-ease),
+    color var(--nd-motion-fast) var(--nd-motion-ease);
+}
+
+.nd-located-row > td {
+  background-color: hsl(var(--accent));
+}
+
+.nd-located-row > td:first-child {
+  box-shadow: inset 2px 0 0 var(--color-status-info);
+}
+
+.nd-located-cell {
+  box-shadow:
+    inset 0 0 0 1px var(--color-status-info),
+    inset 0 0 0 9999px hsl(210 90% 55% / 0.08);
+}
+
+.diff-studio-stage {
+  background-image:
+    linear-gradient(90deg, hsl(var(--border) / 0.32) 1px, transparent 1px),
+    linear-gradient(180deg, hsl(var(--border) / 0.22) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.diff-studio-panel {
+  box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.08);
+}
+
+.diff-studio-selected {
+  box-shadow:
+    inset 0 0 0 1px var(--color-status-info),
+    inset 0 0 0 9999px hsl(210 90% 55% / 0.08);
+}
+
+.diff-studio-enter {
+  animation: nd-panel-enter var(--nd-motion-normal) var(--nd-motion-ease) both;
+}
+
+.nd-panel-enter {
+  animation: nd-panel-enter var(--nd-motion-normal) var(--nd-motion-ease) both;
+}
+
+.nd-drawer-overlay {
+  animation: nd-fade-in var(--nd-motion-fast) var(--nd-motion-ease) both;
+}
+
+.nd-drawer-panel {
+  animation: nd-drawer-enter var(--nd-motion-normal) var(--nd-motion-ease) both;
+}
+
+.nd-audit-detail {
+  animation: nd-detail-open var(--nd-motion-fast) var(--nd-motion-ease) both;
+  transform-origin: top;
+}
+
+.nd-field-edit {
+  animation: nd-detail-open var(--nd-motion-fast) var(--nd-motion-ease) both;
+  transform-origin: top left;
+}
+
+.nd-save-state {
+  transition:
+    border-color var(--nd-motion-fast) var(--nd-motion-ease),
+    color var(--nd-motion-fast) var(--nd-motion-ease),
+    opacity var(--nd-motion-fast) var(--nd-motion-ease);
+}
+
+.nd-rail-marker {
+  transition:
+    background-color var(--nd-motion-fast) var(--nd-motion-ease),
+    border-color var(--nd-motion-fast) var(--nd-motion-ease),
+    box-shadow var(--nd-motion-fast) var(--nd-motion-ease),
+    transform var(--nd-motion-fast) var(--nd-motion-ease);
+}
+
+@keyframes nd-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes nd-drawer-enter {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes nd-detail-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scaleY(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes nd-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.nd-table-row > td {
+  transition:
+    background-color var(--nd-motion-fast) var(--nd-motion-ease),
+    box-shadow var(--nd-motion-fast) var(--nd-motion-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nd-interactive-surface:hover {
+    background-color: var(--nd-hover-bg);
+    border-color: var(--nd-hover-border);
+  }
+
+  .nd-interactive-row:not(.nd-active-row):hover {
+    background-color: var(--nd-hover-bg);
+  }
+
+  .nd-interactive-surface:hover::after,
+  .nd-interactive-row:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nd-interactive-row:hover::before {
+    opacity: 0.85;
+    transform: scaleY(1);
+  }
+
+  .nd-table-row:hover > td {
+    background-color: var(--nd-hover-bg);
+  }
+
+  .nd-table-row:hover > td:first-child {
+    box-shadow: inset 2px 0 0 hsl(var(--foreground));
+  }
+
+  .nd-rail-marker:hover {
+    box-shadow:
+      0 0 0 1px hsl(var(--background)),
+      0 0 0 3px var(--color-status-info);
+    transform: translateX(-50%) scale(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nd-interactive-surface,
+  .nd-interactive-row,
+  .nd-transition-state,
+  .nd-interactive-surface::after,
+  .nd-interactive-row::before,
+  .nd-interactive-row::after,
+  .nd-table-row > td,
+  .diff-studio-enter,
+  .nd-panel-enter,
+  .nd-drawer-overlay,
+  .nd-drawer-panel,
+  .nd-audit-detail,
+  .nd-field-edit,
+  .nd-save-state,
+  .nd-rail-marker {
+    transition: none;
+    animation: none;
+  }
+
+  .nd-interactive-surface::after,
+  .nd-interactive-row::after,
+  .nd-drawer-panel,
+  .nd-audit-detail,
+  .nd-field-edit {
+    transform: none;
+  }
+
+  .nd-rail-marker {
+    transform: translateX(-50%);
+  }
+}

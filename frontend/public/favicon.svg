@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="ChronoTrace">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path
+      d="M181 43c-18-10-40-14-62-10-51 9-88 54-88 106 0 60 48 108 108 108 20 0 39-6 55-16"
+      stroke="#111827"
+      stroke-width="16"
+    />
+    <path d="M191 53l16 10-16 10" stroke="#0ea5e9" stroke-width="8" />
+    <circle cx="181" cy="43" r="12" fill="#f8fafc" stroke="#111827" stroke-width="8" />
+    <circle cx="31" cy="139" r="9" fill="#f8fafc" stroke="#111827" stroke-width="6" />
+    <circle cx="194" cy="231" r="9" fill="#f8fafc" stroke="#111827" stroke-width="6" />
+    <circle cx="207" cy="63" r="14" fill="#0ea5e9" stroke="#f8fafc" stroke-width="6" />
+    <rect x="84" y="82" width="88" height="92" rx="14" fill="#f8fafc" stroke="#111827" stroke-width="8" />
+    <path d="M84 112h88M84 143h88M114 82v92M144 82v92" stroke="#111827" stroke-width="5" />
+    <path d="M106 195h44M128 174v21" stroke="#111827" stroke-width="8" />
+    <circle cx="128" cy="128" r="10" fill="#0ea5e9" stroke="#111827" stroke-width="6" />
+  </g>
+</svg>
